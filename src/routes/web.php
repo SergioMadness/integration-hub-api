@@ -1,7 +1,6 @@
 <?php
 
 Route::group(['prefix' => 'api/v1', 'middleware' => ['api'], 'namespace' => 'professionalweb\IntegrationHub\IntegrationHub\Http\Controllers'], function () {
-    Route::get('navigation', 'NavigationController@index');
     Route::post('login', 'AuthController@login');
     Route::group(['middleware' => ['auth']], function () {
         Route::get('/applications', 'ApplicationController@index');

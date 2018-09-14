@@ -19,7 +19,6 @@ class IntegrationHubProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(EventServiceProvider::class);
-        $this->app->singleton(Navigation::class, Navigator::class);
         $this->app->singleton(IApplicationRepository::class, ApplicationRepository::class);
         $this->app->singleton(IRequestValidation::class, RequestValidation::class);
         $this->app->singleton(IUserRepository::class, function () {
