@@ -4,9 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Jobs\NewRequest;
 use professionalweb\IntegrationHub\IntegrationHubDB\Traits\UseRequestRepository;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Repositories\RequestRepository;
 
 /**
@@ -45,7 +45,7 @@ class EventController extends Controller
         $this->getRequestRepository()->save($model);
 
         $this->dispatch(
-            (new NewRequest($model))->onQueue(config('app.new-event-queue'))
+            (new NewRequest($model))->onQueue(config('integration-hub.new-event-queue'))
         );
 
         return $this->response($model);
