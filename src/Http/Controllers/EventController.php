@@ -45,7 +45,9 @@ class EventController extends Controller
         $this->getRequestRepository()->save($model);
 
         $this->dispatch(
-            (new NewRequest($model))->onQueue(config('integration-hub.new-event-queue'))
+            (new NewRequest($model))
+                ->onConnection(config('integration-hub.new-event-connection', 'default'))
+                ->onQueue(config('integration-hub.new-event-queue', 'default'))
         );
 
         return $this->response($model);

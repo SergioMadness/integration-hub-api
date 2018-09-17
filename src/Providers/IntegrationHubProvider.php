@@ -36,9 +36,5 @@ class IntegrationHubProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'IntegrationHub');
-
-        /** @var Navigation $navigationService */
-        $navigationService = app(Navigation::class);
-        $navigationService->register('Settings', 'Приложения', '/index.html');
     }
 }
