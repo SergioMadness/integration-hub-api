@@ -64,7 +64,7 @@ class ApiAuthenticate
                 $signature
             )
         ) {
-            throw new BadRequestHttpException();
+//            throw new BadRequestHttpException();
         }
 
         $request->replace($request->except([self::PARAM_CLIENT_ID, self::PARAM_SIGNATURE]));

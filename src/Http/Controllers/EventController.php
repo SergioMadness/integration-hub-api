@@ -63,7 +63,7 @@ class EventController extends Controller
     protected function getValidator(array $data): Validator
     {
         $validator = \Validator::make($data, [
-            'data' => 'required|array',
+//            'data' => 'required|array',
         ]);
 
         return $validator;
