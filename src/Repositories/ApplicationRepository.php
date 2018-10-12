@@ -73,4 +73,16 @@ class ApplicationRepository extends BaseRepository implements IApplicationReposi
 
         return $model;
     }
+
+    /**
+     * Get application by permanent token
+     *
+     * @param string $token
+     *
+     * @return null|Application
+     */
+    public function getByPermanentToken(string $token): ?Application
+    {
+        // TODO: Implement getByPermanentToken() method.
+    }
 }

@@ -3,9 +3,9 @@
 namespace professionalweb\IntegrationHub\IntegrationHub\Http\Middleware;
 
 use Closure;
-use professionalweb\IntegrationHub\IntegrationHub\Traits\UseApplicationRepository;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use professionalweb\IntegrationHub\IntegrationHub\Traits\UseApplicationRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Services\RequestValidation;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\ApplicationRepository;
 
@@ -20,6 +20,8 @@ class ApiAuthenticate
     public const PARAM_SIGNATURE = 'sig';
 
     public const PARAM_CLIENT_ID = 'token';
+
+    public const PERMANENT_TOKEN = 'ptoken';
 
     /**
      * @var RequestValidation
@@ -52,22 +54,30 @@ class ApiAuthenticate
     {
         $clientId = $request->get(self::PARAM_CLIENT_ID);
         $signature = $request->get(self::PARAM_SIGNATURE);
+        $permanentToken = $request->get(self::PERMANENT_TOKEN);
 
-        if (empty($clientId) || empty($signature) || ($application = $this->getApplicationRepository()->getByClientId($clientId)) === null) {
-            throw new UnauthorizedHttpException('');
+        $application = null;
+        if (!empty($permanentToken)) {
+            $application = $this->getApplicationRepository()->getByPermanentToken($permanentToken);
         }
 
-        if (!$this->getRequestValidationService()
-            ->validate(
-                $request->except(self::PARAM_SIGNATURE),
-                $application->client_secret,
-                $signature
-            )
-        ) {
+        if ($application === null) {
+            if (empty($clientId) || empty($signature) || ($application = $this->getApplicationRepository()->getByClientId($clientId)) === null) {
+                throw new UnauthorizedHttpException('');
+            }
+
+            if (!$this->getRequestValidationService()
+                ->validate(
+                    $request->except(self::PARAM_SIGNATURE),
+                    $application->client_secret,
+                    $signature
+                )
+            ) {
 //            throw new BadRequestHttpException();
+            }
         }
 
-        $request->replace($request->except([self::PARAM_CLIENT_ID, self::PARAM_SIGNATURE]));
+        $request->replace($request->except([self::PARAM_CLIENT_ID, self::PARAM_SIGNATURE, self::PERMANENT_TOKEN]));
 
         $request->attributes->set('application', $application);
 

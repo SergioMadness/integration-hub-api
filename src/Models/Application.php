@@ -1,5 +1,6 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
 use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
 
@@ -20,4 +21,12 @@ class Application extends UUIDModel implements Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function permanentTokens(): HasMany
+    {
+        return $this->hasMany(PermanentToken::class, 'application_id');
+    }
 }

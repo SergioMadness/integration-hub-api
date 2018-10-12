@@ -26,4 +26,13 @@ interface ApplicationRepository extends Repository
      * @return Application
      */
     public function generateKeys(Application $model): Application;
+
+    /**
+     * Get application by permanent token
+     *
+     * @param string $token
+     *
+     * @return null|Application
+     */
+    public function getByPermanentToken(string $token): ?Application;
 }
