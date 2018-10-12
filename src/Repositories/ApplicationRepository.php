@@ -2,6 +2,7 @@
 
 use professionalweb\IntegrationHub\IntegrationHub\Models\Application;
 use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use professionalweb\IntegrationHub\IntegrationHub\Models\PermanentToken;
 use professionalweb\IntegrationHub\IntegrationHubDB\Repositories\BaseRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\ApplicationRepository as IApplicationRepository;
 
@@ -83,6 +84,12 @@ class ApplicationRepository extends BaseRepository implements IApplicationReposi
      */
     public function getByPermanentToken(string $token): ?Application
     {
-        // TODO: Implement getByPermanentToken() method.
+        $time = time();
+        /** @var PermanentToken $token */
+        if (($token = PermanentToken::query()->find($token)) !== null && strtotime($token->till) >= $time && strtotime($token->since) <= $time) {
+            return $token->application;
+        }
+
+        return null;
     }
 }

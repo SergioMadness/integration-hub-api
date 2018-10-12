@@ -8,7 +8,7 @@ use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
  * @package professionalweb\IntegrationHub\IntegrationHub\Models
  *
  * @property string      $id
- * @property string      $application
+ * @property string      $application_id
  * @property string      $since
  * @property string      $till
  *
