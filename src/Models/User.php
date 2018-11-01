@@ -2,56 +2,18 @@
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Model as BaseModel;
 use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User as IUser;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as IToken;
 
 /**
  * User
- * @package App\Models
+ * @package professionalweb\IntegrationHub\IntegrationHub\Models
  */
-class User implements Model, IUser, Arrayable, Authenticatable
+class User extends BaseModel implements Model, IUser, Arrayable, Authenticatable
 {
     use \Illuminate\Auth\Authenticatable;
-
-    /**
-     * @var string
-     */
-    private $login;
-
-    /**
-     * @var string
-     */
-    private $password;
-
-    public function __construct(array $attributes = [], ?string $login = null, ?string $password = null)
-    {
-        $this
-            ->setLogin($login)
-            ->setPassword($password);
-    }
-
-    /**
-     * Save model
-     *
-     * @param array $options
-     *
-     * @return bool
-     */
-    public function save(array $options = [])
-    {
-        return true;
-    }
-
-    /**
-     * Delete model
-     *
-     * @return bool
-     */
-    public function delete()
-    {
-        return true;
-    }
 
     /**
      * Generate token
@@ -100,31 +62,6 @@ class User implements Model, IUser, Arrayable, Authenticatable
     {
         $this->password = $password;
 
-        return $this;
-    }
-
-
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'login' => $this->getLogin(),
-        ];
-    }
-
-    /**
-     * Fill model
-     *
-     * @param array $attributes
-     *
-     * @return $this
-     */
-    public function fill(array $attributes)
-    {
         return $this;
     }
 }

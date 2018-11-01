@@ -6,7 +6,7 @@ use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
 
 /**
  * Application
- * @package App\Models
+ * @package professionalweb\IntegrationHub\IntegrationHub\Models
  *
  * @property string $id
  * @property string $client_id

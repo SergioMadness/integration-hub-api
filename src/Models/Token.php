@@ -5,7 +5,7 @@ use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as ITo
 
 /**
  * Token
- * @package App\Models
+ * @package professionalweb\IntegrationHub\IntegrationHub\Models
  */
 class Token implements Model, IToken
 {
