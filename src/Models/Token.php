@@ -1,50 +1,50 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as IToken;
 
 /**
  * Token
  * @package professionalweb\IntegrationHub\IntegrationHub\Models
+ *
+ * @property string $id
+ * @property string $token
+ * @property string $refresh_token
+ * @property string $user_id
+ * @property string $created_at
+ * @property string $updated_at
+ *
+ * @property User   $user
  */
-class Token implements Model, IToken
+class Token extends UUIDModel implements Model, IToken
 {
-    /**
-     * @var string
-     */
-    private $token;
+    protected $table = 'user_access_tokens';
 
-    /**
-     * @var string
-     */
-    private $refreshToken;
+    protected $keyType = 'string';
 
-    public function __construct()
+    public static function boot()
     {
-        $this->token = md5(config('app.login'));
-        $this->refreshToken = md5(config('app.password'));
+        parent::boot();
+
+        static::creating(function (Token $model) {
+            if (empty($model->token)) {
+                $model->generateToken();
+            }
+        });
     }
 
     /**
-     * Save model
+     * Generate tokens
      *
-     * @param array $options
-     *
-     * @return bool
+     * @return string
      */
-    public function save(array $options = [])
+    public function generateToken(): string
     {
-        return true;
-    }
+        $this->refresh_token = str_random();
 
-    /**
-     * Delete model
-     *
-     * @return bool
-     */
-    public function delete()
-    {
-        return true;
+        return $this->token = str_random();
     }
 
     /**
@@ -56,47 +56,18 @@ class Token implements Model, IToken
     }
 
     /**
-     * @param string $token
-     *
-     * @return $this
-     */
-    public function setToken(string $token): self
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getRefreshToken(): string
     {
-        return $this->refreshToken;
+        return $this->refresh_token;
     }
 
     /**
-     * @param string $refreshToken
-     *
-     * @return Token
+     * @return BelongsTo
      */
-    public function setRefreshToken(string $refreshToken): self
+    public function user(): BelongsTo
     {
-        $this->refreshToken = $refreshToken;
-
-        return $this;
-    }
-
-
-    /**
-     * Fill model
-     *
-     * @param array $attributes
-     *
-     * @return $this
-     */
-    public function fill(array $attributes)
-    {
-        return $this;
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

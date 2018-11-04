@@ -14,4 +14,11 @@ interface User extends Model
      * @return Token
      */
     public function generateToken(): Token;
+
+    /**
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function validatePassword(string $password): bool;
 }

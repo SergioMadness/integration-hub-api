@@ -19,4 +19,11 @@ interface Token
      * @return string
      */
     public function getRefreshToken(): string;
+
+    /**
+     * Generate token
+     *
+     * @return string
+     */
+    public function generateToken(): string;
 }

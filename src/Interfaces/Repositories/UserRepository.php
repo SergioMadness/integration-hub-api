@@ -27,7 +27,7 @@ interface UserRepository extends Repository
      *
      * @return Token
      */
-    public function refreshToken(string $token, string $refreshToken): Token;
+    public function refreshToken(string $token, string $refreshToken): ?Token;
 
     /**
      * Get user by login and password
