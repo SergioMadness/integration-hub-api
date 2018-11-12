@@ -40,7 +40,9 @@ class EventController extends Controller
         /** @var \professionalweb\IntegrationHub\IntegrationHubDB\Models\Request $model */
         $model = $this->getRequestRepository()->create([
             'application_id' => $request->attributes->get('application')->id,
-            'body'           => $data,
+            'body'           => [
+                'original' => $data,
+            ],
         ]);
         $this->getRequestRepository()->save($model);
 
