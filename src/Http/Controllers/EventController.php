@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Jobs\NewRequest;
-use professionalweb\IntegrationHub\IntegrationHubDB\Traits\UseRequestRepository;
 use professionalweb\IntegrationHub\IntegrationHubDB\Models\Request as RequestModel;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Repositories\RequestRepository;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Traits\UseRequestRepository;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Repositories\RequestRepository;
 
 /**
  * Controller to work with events/requests

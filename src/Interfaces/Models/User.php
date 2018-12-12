@@ -1,6 +1,6 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models;
 
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 
 /**
  * Interface for user model

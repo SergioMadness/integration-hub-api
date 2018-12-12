@@ -2,12 +2,10 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use professionalweb\IntegrationHub\IntegrationHub\Services\Navigator;
 use professionalweb\IntegrationHub\IntegrationHub\Services\RequestValidation;
 use professionalweb\IntegrationHub\IntegrationHub\Repositories\UserRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Http\Middleware\Authenticate;
 use professionalweb\IntegrationHub\IntegrationHub\Http\Middleware\CorsMiddleware;
-use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Services\Navigation;
 use professionalweb\IntegrationHub\IntegrationHub\Http\Middleware\ApiAuthenticate;
 use professionalweb\IntegrationHub\IntegrationHub\Repositories\ApplicationRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository as IUserRepository;
@@ -22,7 +20,7 @@ class IntegrationHubProvider extends ServiceProvider
         $this->app->singleton(IApplicationRepository::class, ApplicationRepository::class);
         $this->app->singleton(IRequestValidation::class, RequestValidation::class);
         $this->app->singleton(IUserRepository::class, function () {
-            return new UserRepository(config('ihub.login', ''), config('ihub.password', ''));
+            return new UserRepository();
         });
     }
 

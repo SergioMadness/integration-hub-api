@@ -6,8 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Validation\Validator as IValidator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Traits\UseUserRepository;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository;
 
 /**

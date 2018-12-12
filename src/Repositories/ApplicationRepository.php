@@ -1,8 +1,8 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Repositories;
 
 use professionalweb\IntegrationHub\IntegrationHub\Models\Application;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Models\PermanentToken;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHubDB\Repositories\BaseRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\ApplicationRepository as IApplicationRepository;
 

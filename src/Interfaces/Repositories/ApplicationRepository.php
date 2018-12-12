@@ -1,7 +1,7 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories;
 
 use professionalweb\IntegrationHub\IntegrationHub\Models\Application;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Repository;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Repositories\Repository;
 
 /**
  * Interface for application repository

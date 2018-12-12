@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Traits\UseApplicationRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\ApplicationRepository;
 

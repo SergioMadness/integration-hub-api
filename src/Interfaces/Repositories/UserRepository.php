@@ -2,7 +2,7 @@
 
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Repository;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Repositories\Repository;
 
 /**
  * Interface for user repository

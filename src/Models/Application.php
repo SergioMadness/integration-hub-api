@@ -1,8 +1,8 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
 use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 
 /**
  * Application

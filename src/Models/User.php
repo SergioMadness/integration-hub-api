@@ -1,11 +1,10 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model as BaseModel;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User as IUser;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as IToken;
 
@@ -23,7 +22,7 @@ use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as ITo
  *
  * @property Collection $tokens
  */
-class User extends BaseModel implements Model, IUser, Arrayable, Authenticatable
+class User extends BaseModel implements Model, IUser, Authenticatable
 {
     use \Illuminate\Auth\Authenticatable;
 

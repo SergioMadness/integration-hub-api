@@ -1,8 +1,8 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
 use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as IToken;
 
 /**
