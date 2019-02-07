@@ -16,7 +16,7 @@
     "laravel/framework": "5.7.*",
     "ramsey/uuid": "^3.5",
     "professionalweb/integration-hub-common": "dev-develop",
-    "professionalweb/integration-hub-db": "*"
+    "professionalweb/integration-hub-db": "dev-develop"
   },
   "require-dev": {
   },
