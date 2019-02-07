@@ -1,11 +1,9 @@
-<?php
-
-namespace professionalweb\IntegrationHub\IntegrationHub\Http\Middleware;
+<?php namespace professionalweb\IntegrationHub\IntegrationHub\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Validation\UnauthorizedException;
-use professionalweb\IntegrationHub\IntegrationHubCommon\Constants\Request as IRequest;
+use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Request as IRequest;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository;
 
 class Authenticate

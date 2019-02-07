@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use professionalweb\IntegrationHub\IntegrationHubCommon\Constants\Request as IRequest;
+use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Request as IRequest;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository;
 
 /**
