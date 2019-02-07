@@ -1,57 +1,40 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
-use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Auth\Authenticatable;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model as BaseModel;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User as IUser;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as IToken;
 
 /**
  * User
- * @package App\Models
+ * @package professionalweb\IntegrationHub\IntegrationHub\Models
+ *
+ * @property string     $id
+ * @property string     $login
+ * @property string     $password
+ * @property bool       $is_active
+ * @property array      $settings
+ * @property string     $created_at
+ * @property string     $updated_at
+ *
+ * @property Collection $tokens
  */
-class User implements Model, IUser, Arrayable, Authenticatable
+class User extends BaseModel implements Model, IUser, Authenticatable
 {
     use \Illuminate\Auth\Authenticatable;
 
-    /**
-     * @var string
-     */
-    private $login;
+    protected $table = 'users';
 
-    /**
-     * @var string
-     */
-    private $password;
+    protected $keyType = 'string';
 
-    public function __construct(array $attributes = [], ?string $login = null, ?string $password = null)
-    {
-        $this
-            ->setLogin($login)
-            ->setPassword($password);
-    }
+    protected $fillable = ['login', 'password'];
 
-    /**
-     * Save model
-     *
-     * @param array $options
-     *
-     * @return bool
-     */
-    public function save(array $options = [])
-    {
-        return true;
-    }
-
-    /**
-     * Delete model
-     *
-     * @return bool
-     */
-    public function delete()
-    {
-        return true;
-    }
+    protected $casts = [
+        'settings' => 'array',
+    ];
 
     /**
      * Generate token
@@ -60,71 +43,35 @@ class User implements Model, IUser, Arrayable, Authenticatable
      */
     public function generateToken(): IToken
     {
-        return new Token();
-    }
+        $token = new Token();
+        $this->tokens()->save($token);
 
-    /**
-     * @return string
-     */
-    public function getLogin(): string
-    {
-        return $this->login;
-    }
-
-    /**
-     * @param string $login
-     *
-     * @return $this
-     */
-    public function setLogin(?string $login): self
-    {
-        $this->login = $login;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
+        return $token;
     }
 
     /**
      * @param string $password
      *
-     * @return $this
+     * @return bool
      */
-    public function setPassword(?string $password): self
+    public function validatePassword(string $password): bool
     {
-        $this->password = $password;
-
-        return $this;
-    }
-
-
-    /**
-     * Get the instance as an array.
-     *
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            'login' => $this->getLogin(),
-        ];
+        return password_verify($password, $this->password);
     }
 
     /**
-     * Fill model
-     *
-     * @param array $attributes
-     *
-     * @return $this
+     * @param string $password
      */
-    public function fill(array $attributes)
+    public function setPasswordAttribute(?string $password): void
     {
-        return $this;
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function tokens(): HasMany
+    {
+        return $this->hasMany(Token::class, 'user_id');
     }
 }

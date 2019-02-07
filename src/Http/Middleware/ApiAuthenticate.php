@@ -1,9 +1,6 @@
-<?php
-
-namespace professionalweb\IntegrationHub\IntegrationHub\Http\Middleware;
+<?php namespace professionalweb\IntegrationHub\IntegrationHub\Http\Middleware;
 
 use Closure;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use professionalweb\IntegrationHub\IntegrationHub\Traits\UseApplicationRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Services\RequestValidation;

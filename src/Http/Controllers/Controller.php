@@ -1,7 +1,6 @@
-<?php
+<?php namespace professionalweb\IntegrationHub\IntegrationHub\Http\Controllers;
 
-namespace professionalweb\IntegrationHub\IntegrationHub\Http\Controllers;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Support\Arrayable;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +25,18 @@ class Controller extends BaseController
     public const HEADER_PAGINATION_PAGES = 'x-pagination-pages';
 
     public const HEADER_PAGINATION_PAGE = 'x-pagination-page';
+
+    /**
+     * Get limit
+     *
+     * @param Request $request
+     *
+     * @return int
+     */
+    protected function getLimit(Request $request): int
+    {
+        return min(self::LIST_LIMIT_MAX, $request->get('limit', self::LIST_LIMIT));
+    }
 
     /**
      * Response with list data

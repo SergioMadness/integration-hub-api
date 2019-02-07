@@ -2,7 +2,7 @@
 
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token;
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Repository;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Repositories\Repository;
 
 /**
  * Interface for user repository
@@ -27,7 +27,7 @@ interface UserRepository extends Repository
      *
      * @return Token
      */
-    public function refreshToken(string $token, string $refreshToken): Token;
+    public function refreshToken(string $token, string $refreshToken): ?Token;
 
     /**
      * Get user by login and password
