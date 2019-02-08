@@ -2,9 +2,9 @@
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Validation\UnauthorizedException;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Request as IRequest;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Authenticate
 {
@@ -27,7 +27,7 @@ class Authenticate
 
         $user = !empty($token) ? $userRepository->getByToken($token) : null;
         if ($user === null) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedHttpException('');
         }
 
         \Auth::setUser($user);
