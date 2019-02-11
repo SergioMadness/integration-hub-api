@@ -80,13 +80,23 @@ class EventController extends Controller
         ]);
         $this->getRequestRepository()->save($model);
 
+        $this->sendEvent($model);
+
+        return $this->response($model);
+    }
+
+    /**
+     * Send request
+     *
+     * @param RequestModel $model
+     */
+    protected function sendEvent(RequestModel $model): void
+    {
         $this->dispatch(
             (new NewRequest($model))
                 ->onConnection(config('integration-hub.new-event-connection'))
                 ->onQueue(config('integration-hub.new-event-queue'))
         );
-
-        return $this->response($model);
     }
 
     /**
