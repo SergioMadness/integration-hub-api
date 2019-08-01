@@ -23,7 +23,7 @@ class Users extends Migration
             $table->timestamps();
         });
 
-        Schema::table('user_access_tokens', function (Blueprint $table) {
+        Schema::create('user_access_tokens', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('token')->unique();
             $table->uuid('user_id');
