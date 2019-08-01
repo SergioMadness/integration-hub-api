@@ -11,6 +11,7 @@ class Users extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function up()
     {
@@ -33,7 +34,7 @@ class Users extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
-        User::query()->create(['login' => 'admin', 'password' => 'admin112']);
+        User::query()->create(['id' => \Ramsey\Uuid\Uuid::uuid4(), 'login' => 'admin', 'password' => 'admin112']);
     }
 
     /**
