@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User as IUser;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as IToken;
+use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
 
 /**
  * User
@@ -22,7 +23,7 @@ use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token as ITo
  *
  * @property Collection $tokens
  */
-class User extends BaseModel implements Model, IUser, Authenticatable
+class User extends UUIDModel implements Model, IUser, Authenticatable
 {
     use \Illuminate\Auth\Authenticatable;
 
