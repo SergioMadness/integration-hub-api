@@ -2,6 +2,7 @@
 
 use professionalweb\IntegrationHub\IntegrationHub\Models\User;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\Token;
+use professionalweb\IntegrationHub\IntegrationHub\Models\Token as TokenModel;
 use professionalweb\IntegrationHub\IntegrationHubDB\Repositories\BaseRepository;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models\User as IUser;
 use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository as IUserRepository;
@@ -12,22 +13,10 @@ use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRe
  */
 class UserRepository extends BaseRepository implements IUserRepository
 {
-    /**
-     * @var string
-     */
-    private $adminLogin;
 
-    /**
-     * @var string
-     */
-    private $adminPassword;
-
-    public function __construct(?string $login = null, ?string $password = null)
+    public function __construct()
     {
-        $this
-            ->setLogin($login)
-            ->setPassword($password)
-            ->setModelClass(User::class);
+        $this->setModelClass(User::class);
     }
 
     /**
@@ -39,13 +28,10 @@ class UserRepository extends BaseRepository implements IUserRepository
      */
     public function getByToken(string $token): ?IUser
     {
-        /** @var User $user */
-        $user = $this->create();
-        if ($token === $user->generateToken()->getToken()) {
-            return $user;
-        }
+        /** @var TokenModel $tokenO */
+        $tokenO = TokenModel::query()->where('token', $token)->first();
 
-        return null;
+        return $tokenO !== null ? $tokenO->user : null;
     }
 
     /**
@@ -55,10 +41,20 @@ class UserRepository extends BaseRepository implements IUserRepository
      * @param string $refreshToken
      *
      * @return Token
+     * @throws \Exception
      */
     public function refreshToken(string $token, string $refreshToken): Token
     {
+        /** @var TokenModel $tokenO */
+        $tokenO = TokenModel::query()->where('token', $token)->first();
+        if ($tokenO !== null && $tokenO->refresh_token === $refreshToken) {
+            $user = $tokenO->user;
+            $tokenO->delete();
 
+            return $user->generateToken();
+        }
+
+        return null;
     }
 
     /**
@@ -71,50 +67,12 @@ class UserRepository extends BaseRepository implements IUserRepository
      */
     public function getByCredentials(string $login, string $password): ?IUser
     {
-        if ($login === $this->getLogin() && $password === $this->getPassword()) {
-            return new User([], $this->getLogin(), $this->getPassword());
+        /** @var User $user */
+        $user = User::query()->where('login', $login)->first();
+        if ($user->validatePassword($password)) {
+            return $user;
         }
 
         return null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogin(): string
-    {
-        return $this->adminLogin;
-    }
-
-    /**
-     * @param string $login
-     *
-     * @return $this
-     */
-    public function setLogin(string $login): self
-    {
-        $this->adminLogin = $login;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->adminPassword;
-    }
-
-    /**
-     * @param string $password
-     *
-     * @return $this
-     */
-    public function setPassword(string $password): self
-    {
-        $this->adminPassword = $password;
-
-        return $this;
     }
 }

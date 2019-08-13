@@ -1,11 +1,12 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Models;
 
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 
 /**
  * Application
- * @package App\Models
+ * @package professionalweb\IntegrationHub\IntegrationHub\Models
  *
  * @property string $id
  * @property string $client_id
@@ -20,4 +21,12 @@ class Application extends UUIDModel implements Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function permanentTokens(): HasMany
+    {
+        return $this->hasMany(PermanentToken::class, 'application_id');
+    }
 }

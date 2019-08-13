@@ -1,6 +1,6 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Interfaces\Models;
 
-use professionalweb\IntegrationHub\IntegrationHubDB\Interfaces\Model;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 
 /**
  * Interface for user model
@@ -14,4 +14,11 @@ interface User extends Model
      * @return Token
      */
     public function generateToken(): Token;
+
+    /**
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function validatePassword(string $password): bool;
 }

@@ -1,30 +1,30 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Validator as ValidatorFacade;
+use Illuminate\Contracts\Validation\Validator as IValidator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use professionalweb\IntegrationHub\IntegrationHub\Traits\UseUserRepository;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
-use professionalweb\IntegrationHub\IntegrationHub\Traits\UseApplicationRepository;
-use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\ApplicationRepository;
+use professionalweb\IntegrationHub\IntegrationHub\Interfaces\Repositories\UserRepository;
 
 /**
- * Controller to work with applications
- * @package App\Http\Controllers
+ * Controller to work with users
+ * @package professionalweb\IntegrationHub\IntegrationHub\Http\Controllers
  */
-class ApplicationController extends Controller
+class UserController extends Controller
 {
-    use UseApplicationRepository;
+    use UseUserRepository;
 
-    public function __construct(ApplicationRepository $applicationRepository)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->setApplicationRepository($applicationRepository);
+        $this->setUserRepository($userRepository);
     }
 
     /**
-     * Get application list
+     * Get user list
      *
      * @param Request $request
      *
@@ -35,16 +35,16 @@ class ApplicationController extends Controller
         $limit = $this->getLimit($request);
         $offset = max(0, $request->get('offset', 0));
 
-        $data = $this->getApplicationRepository()->get([], [], $limit, $offset);
+        $data = $this->getUserRepository()->get([], [], $limit, $offset);
 
         return $this->response($data);
     }
 
     /**
-     * Create or update application
+     * Save user
      *
-     * @param Request     $request
-     * @param string|null $id
+     * @param Request $request
+     * @param null    $id
      *
      * @return Response
      * @throws \Exception
@@ -56,7 +56,7 @@ class ApplicationController extends Controller
         if ($id !== null) {
             $model = $this->getModel($id);
         } else {
-            $model = $this->getApplicationRepository()->create();
+            $model = $this->getUserRepository()->create();
         }
 
         $validator = $this->getValidator($data);
@@ -64,37 +64,19 @@ class ApplicationController extends Controller
             throw new BadRequestHttpException($validator->errors()->first());
         }
 
-        if (!$this->getApplicationRepository()->fill($model, $data)->save()) {
-            throw new \Exception('Невозможно сохранить приложение');
+        if (!$this->getUserRepository()->fill($model, $data)->save()) {
+            throw new \Exception('Невозможно сохранить пользователя');
         }
 
         return $this->response($model, [], $id === null ? self::STATUS_CREATED : self::STATUS_OK);
     }
 
     /**
-     * Set new keys
-     *
-     * @param $id
-     *
-     * @return Response
-     */
-    public function regenerateTokens($id): Response
-    {
-        $model = $this->getModel($id);
-
-        $this->getApplicationRepository()->generateKeys($model);
-
-        return $this->response($model);
-    }
-
-    /**
-     * Get model by id
+     * Get user by id
      *
      * @param string $id
      *
      * @return Response
-     * @throws \InvalidArgumentException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function view(string $id): Response
     {
@@ -104,12 +86,11 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Delete model
+     * Remove user
      *
      * @param string $id
      *
      * @return Response
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function destroy(string $id): Response
     {
@@ -119,16 +100,17 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Get validator
+     * Create validator
      *
      * @param array $data
      *
-     * @return Validator
+     * @return IValidator
      */
-    protected function getValidator(array $data): Validator
+    protected function getValidator(array $data): IValidator
     {
-        $validator = ValidatorFacade::make($data, [
-            'name' => 'required',
+        $validator = Validator::make($data, [
+            'login'    => 'required',
+            'password' => 'required',
         ]);
 
         return $validator;
@@ -140,11 +122,11 @@ class ApplicationController extends Controller
      * @param int|string $id
      *
      * @return Model
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws NotFoundHttpException
      */
     protected function getModel($id): Model
     {
-        $model = $this->getApplicationRepository()->model($id);
+        $model = $this->getUserRepository()->model($id);
 
         if ($model === null) {
             throw new NotFoundHttpException();
