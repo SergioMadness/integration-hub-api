@@ -1,6 +1,4 @@
-<?php
-
-namespace professionalweb\IntegrationHub\IntegrationHub\Providers;
+<?php namespace professionalweb\IntegrationHub\IntegrationHub\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
