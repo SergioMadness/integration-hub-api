@@ -26,10 +26,6 @@ class IntegrationHubProvider extends ServiceProvider
         $this->app->singleton(IUserRepository::class, function () {
             return new UserRepository();
         });
-
-        /** @var ExceptionProcessor $exceptionPool */
-        $exceptionPool = app(ExceptionProcessor::class);
-        $exceptionPool->register([Handler::class, 'register']);
     }
 
     public function boot(Router $router): void
@@ -42,5 +38,9 @@ class IntegrationHubProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'IntegrationHub');
+
+        /** @var ExceptionProcessor $exceptionPool */
+        $exceptionPool = app(ExceptionProcessor::class);
+        $exceptionPool->register([Handler::class, 'register']);
     }
 }
