@@ -41,6 +41,6 @@ class IntegrationHubProvider extends ServiceProvider
 
         /** @var ExceptionProcessor $exceptionPool */
         $exceptionPool = app(ExceptionProcessor::class);
-        $exceptionPool->register([Handler::class, 'register']);
+        $exceptionPool->register([Handler::class, 'render']);
     }
 }
