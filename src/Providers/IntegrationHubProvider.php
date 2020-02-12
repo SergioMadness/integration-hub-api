@@ -2,7 +2,6 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Debug\ExceptionHandler;
 use professionalweb\IntegrationHub\IntegrationHub\Exceptions\Handler;
 use professionalweb\IntegrationHub\IntegrationHub\Services\RequestValidation;
 use professionalweb\IntegrationHub\IntegrationHub\Repositories\UserRepository;
@@ -20,7 +19,6 @@ class IntegrationHubProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(EventServiceProvider::class);
-        $this->app->singleton(ExceptionHandler::class, Handler::class);
         $this->app->singleton(IRequestValidation::class, RequestValidation::class);
         $this->app->singleton(IApplicationRepository::class, ApplicationRepository::class);
         $this->app->singleton(IUserRepository::class, function () {
@@ -41,6 +39,6 @@ class IntegrationHubProvider extends ServiceProvider
 
         /** @var ExceptionProcessor $exceptionPool */
         $exceptionPool = app(ExceptionProcessor::class);
-        $exceptionPool->register([Handler::class, 'render']);
+        $exceptionPool->register([new Handler(), 'render']);
     }
 }
