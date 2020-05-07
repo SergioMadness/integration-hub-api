@@ -1,6 +1,7 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHub\Exceptions;
 
 use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler
@@ -9,13 +10,13 @@ class Handler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Exception               $e
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $e
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      * @throws \InvalidArgumentException
      */
-    public function render($request, Exception $e)
+    public function render($request, Exception $e): ?Response
     {
         if ($request->is('api/*')) {
             $code = 500;
