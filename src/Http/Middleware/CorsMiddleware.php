@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Symfony\Component\HttpFoundation\Response;
 
 class CorsMiddleware
 {
@@ -19,11 +20,15 @@ class CorsMiddleware
             });
         }
 
+        /** @var Response|\Illuminate\Http\Response $response */
         $response = $next($request);
-        $response->header('Access-Control-Allow-Methods', 'HEAD, GET, POST, PUT, PATCH, DELETE');
-        $response->header('Access-Control-Allow-Headers', $request->header('Access-Control-Request-Headers', '*'));
-        $response->header('Access-Control-Allow-Origin', '*');
-        $response->header('access-control-expose-headers', '*');
+
+        $response->headers->add([
+            'Access-Control-Allow-Methods'  => 'HEAD, GET, POST, PUT, PATCH, DELETE',
+            'Access-Control-Allow-Headers'  => $request->header('Access-Control-Request-Headers', '*'),
+            'Access-Control-Allow-Origin'   => '*',
+            'access-control-expose-headers' => '*',
+        ]);
 
         return $response;
     }
