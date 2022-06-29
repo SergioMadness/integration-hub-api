@@ -11,9 +11,9 @@ class PermanentAccessTokens extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('permanent_access_tokens', function (Blueprint $table) {
+        Schema::create('permanent_access_tokens', static function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('application_id');
             $table->timestamp('since');
@@ -31,7 +31,7 @@ class PermanentAccessTokens extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('permanent_access_tokens');
     }

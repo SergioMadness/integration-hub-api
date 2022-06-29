@@ -13,9 +13,9 @@ class Users extends Migration
      * @return void
      * @throws Exception
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('users', static function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('login')->unique();
             $table->string('password');
@@ -24,7 +24,7 @@ class Users extends Migration
             $table->timestamps();
         });
 
-        Schema::create('user_access_tokens', function (Blueprint $table) {
+        Schema::create('user_access_tokens', static function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('token')->unique();
             $table->uuid('user_id');
@@ -42,7 +42,7 @@ class Users extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('user_access_tokens');
         Schema::drop('users');
