@@ -13,7 +13,7 @@ trait HandleEvents
      *
      * @var array
      */
-    private static $listeners = [];
+    private static array $listeners = [];
 
     /**
      * Add callback
